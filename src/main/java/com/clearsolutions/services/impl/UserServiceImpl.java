@@ -1,6 +1,7 @@
 package com.clearsolutions.services.impl;
 
 import com.clearsolutions.dto.UserDTO;
+import com.clearsolutions.exception.UserNotFoundException;
 import com.clearsolutions.mapper.UserMapper;
 import com.clearsolutions.models.UserEntity;
 import com.clearsolutions.repositories.UserRepository;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = UserMapper.mapToEntity(userDTO);
 
         if (ChronoUnit.YEARS.between(user.getBirthDate(), LocalDateTime.now()) < 18) {
-            throw new RuntimeException("Age should be more than or equal to " + 18 + '!');
+            throw new IllegalArgumentException("Age should be more than or equal to " + 18 + '!');
         }
 
         user = userRepository.save(user);
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity tempUser = new UserEntity();
         UserEntity existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User with id = " + userId + " - not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with id = " + userId + " - not found!"));
 
         BeanUtils.copyProperties(userDTO, tempUser, "id", "birthDate");
         if (userDTO.getBirthDate() != null) {
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUserById(int userId) {
 
         UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User with id = " + userId + " - not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with id = " + userId + " - not found!"));
 
         return UserMapper.mapToDto(user);
     }
