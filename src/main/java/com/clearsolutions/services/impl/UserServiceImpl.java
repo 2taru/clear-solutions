@@ -18,8 +18,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    @Value("${user.required-age}")
+
     // public only for testing purpose
+    @Value("${user.required-age}")
     public int requiredAge;
 
     public UserServiceImpl(UserRepository userRepository) {

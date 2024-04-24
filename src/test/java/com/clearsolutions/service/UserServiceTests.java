@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.expression.AccessException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,7 +48,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void UserService_Create_ReturnsUserDto() throws AccessException {
+    public void UserService_Create_ReturnsUserDto() {
 
         when(userRepository.save(Mockito.any(UserEntity.class))).thenReturn(user);
 
