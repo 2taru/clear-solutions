@@ -1,4 +1,4 @@
-package services;
+package com.clearsolutions.services;
 
 import com.clearsolutions.dto.UserDTO;
 

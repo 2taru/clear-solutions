@@ -1,4 +1,4 @@
-package services.impl;
+package com.clearsolutions.services.impl;
 
 import com.clearsolutions.dto.UserDTO;
 import com.clearsolutions.mapper.UserMapper;
@@ -6,7 +6,7 @@ import com.clearsolutions.models.UserEntity;
 import com.clearsolutions.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import services.UserService;
+import com.clearsolutions.services.UserService;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
