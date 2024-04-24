@@ -82,18 +82,6 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/users/{id}")
-    public ResponseEntity<ResponseDTO> patchUserById(@RequestBody UserDTO userDTO, @PathVariable("id") int userId) {
-
-        UserDTO data = userService.updateUserById(userId, userDTO);
-        ResponseDTO response = ResponseDTO.builder()
-                .data(data)
-                .timestamp(LocalDateTime.now())
-                .build();
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     @DeleteMapping("/users/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable("id") int userId) {
 
