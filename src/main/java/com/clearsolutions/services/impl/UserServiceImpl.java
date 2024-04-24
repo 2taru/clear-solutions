@@ -6,6 +6,7 @@ import com.clearsolutions.mapper.UserMapper;
 import com.clearsolutions.models.UserEntity;
 import com.clearsolutions.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.clearsolutions.services.UserService;
 
@@ -17,6 +18,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    @Value("${user.required-age}")
+    private Integer requiredAge;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -27,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity user = UserMapper.mapToEntity(userDTO);
 
-        if (ChronoUnit.YEARS.between(user.getBirthDate(), LocalDateTime.now()) < 18) {
+        if (ChronoUnit.YEARS.between(user.getBirthDate(), LocalDateTime.now()) < requiredAge) {
             throw new IllegalArgumentException("Age should be more than or equal to " + 18 + '!');
         }
 
@@ -45,6 +48,9 @@ public class UserServiceImpl implements UserService {
 
         BeanUtils.copyProperties(userDTO, tempUser, "id", "birthDate");
         if (userDTO.getBirthDate() != null) {
+            if (ChronoUnit.YEARS.between(userDTO.getBirthDate(), LocalDateTime.now()) < requiredAge) {
+                throw new IllegalArgumentException("Age should be more than or equal to " + 18 + '!');
+            }
             tempUser.setBirthDate(userDTO.getBirthDate());
         }
         BeanUtils.copyProperties(tempUser, existingUser, "id");
