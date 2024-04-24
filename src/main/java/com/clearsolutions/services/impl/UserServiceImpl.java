@@ -18,8 +18,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    // public only for testing purpose
     @Value("${user.required-age}")
-    private Integer requiredAge;
+    public int requiredAge;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = UserMapper.mapToEntity(userDTO);
 
         if (ChronoUnit.YEARS.between(user.getBirthDate(), LocalDateTime.now()) < requiredAge) {
-            throw new IllegalArgumentException("Age should be more than or equal to " + 18 + '!');
+            throw new IllegalArgumentException("Age should be more than or equal to " + requiredAge + '!');
         }
 
         user = userRepository.save(user);
